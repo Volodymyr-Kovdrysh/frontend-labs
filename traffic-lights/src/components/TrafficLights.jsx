@@ -1,4 +1,3 @@
-
 import PropTypes from "prop-types";
 import Light from "./Light";
 
@@ -8,14 +7,14 @@ function TrafficLights({
   currentSignal,
   orientation,
   isAutomatic,
+  controlsDisabled = false,
   onSelect,
 }) {
   return (
     <div
       style={{
         display: "flex",
-        flexDirection:
-          orientation === "horizontal" ? "row" : "column",
+        flexDirection: orientation === "horizontal" ? "row" : "column",
         backgroundColor: "#333",
         padding: 10,
         borderRadius: 10,
@@ -28,7 +27,7 @@ function TrafficLights({
           key={color}
           tlColor={color}
           active={currentSignal === color}
-          disabled={isAutomatic}
+          disabled={isAutomatic || controlsDisabled}
           onSelect={onSelect}
         />
       ))}
@@ -40,6 +39,7 @@ TrafficLights.propTypes = {
   currentSignal: PropTypes.oneOf(["red", "yellow", "green"]).isRequired,
   orientation: PropTypes.oneOf(["vertical", "horizontal"]).isRequired,
   isAutomatic: PropTypes.bool.isRequired,
+  controlsDisabled: PropTypes.bool,
   onSelect: PropTypes.func.isRequired,
 };
 

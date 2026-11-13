@@ -1,4 +1,3 @@
-
 import PropTypes from "prop-types";
 
 function StatsBar({
@@ -11,6 +10,7 @@ function StatsBar({
   onStart,
   onStop,
   readOnly = false,
+  controlsDisabled = false,
 }) {
   return (
     <div style={{ textAlign: "left", lineHeight: 1.8 }}>
@@ -25,18 +25,18 @@ function StatsBar({
 
       <p>
         Орієнтація:{" "}
-        {orientation === "vertical"
-          ? "вертикальна"
-          : "горизонтальна"}
+        {orientation === "vertical" ? "вертикальна" : "горизонтальна"}
       </p>
 
-      <p>
-        Режим: {isAutomatic ? "автоматичний" : "ручний"}
-      </p>
+      <p>Режим: {isAutomatic ? "автоматичний" : "ручний"}</p>
 
       {!readOnly && (
         <>
-          <button type="button" onClick={onToggleOrientation}>
+          <button
+            type="button"
+            onClick={onToggleOrientation}
+            disabled={controlsDisabled}
+          >
             Змінити орієнтацію
           </button>
 
@@ -44,7 +44,7 @@ function StatsBar({
             <button
               type="button"
               onClick={onStart}
-              disabled={isAutomatic}
+              disabled={controlsDisabled || isAutomatic}
             >
               Запустити
             </button>
@@ -52,7 +52,7 @@ function StatsBar({
             <button
               type="button"
               onClick={onStop}
-              disabled={!isAutomatic}
+              disabled={controlsDisabled || !isAutomatic}
             >
               Зупинити
             </button>
@@ -77,6 +77,7 @@ StatsBar.propTypes = {
   onStart: PropTypes.func,
   onStop: PropTypes.func,
   readOnly: PropTypes.bool,
+  controlsDisabled: PropTypes.bool,
 };
 
 export default StatsBar;
