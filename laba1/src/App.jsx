@@ -1,21 +1,12 @@
-import React from 'react';
-import { TrafficLights } from './components/TrafficLights';
-import './App.css';
+import TrafficLights from "./components/TrafficLights";
 
-export default function App() {
+function App() {
   return (
-    <main className="app-container">
-      <h1>Компонентна модель «Світлофора» (CP1)</h1>
-
-      <section className="demo-section">
-        <h2>Вертикальний світлофор</h2>
-        <TrafficLights orientation="vertical" />
-      </section>
-
-      <section className="demo-section">
-        <h2>Горизонтальний світлофор</h2>
-        <TrafficLights orientation="horizontal" />
-      </section>
-    </main>
+    <div style={{ padding: 24 }}>
+      <h1>Світлофор</h1>
+      <TrafficLights />
+    </div>
   );
 }
+
+export default App;
