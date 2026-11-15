@@ -1,16 +1,56 @@
-# React + Vite
+# Світлофор. Лабораторна робота №2
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+**Виконала:** Даскалюк
 
-Currently, two official plugins are available:
+**Контрольна точка:** CP2 — інтерактивний світлофор зі станом і подіями.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Мета
 
-## React Compiler
+Навчитися зберігати змінні дані інтерфейсу у стані React (`useState`), змінювати їх у відповідь на події користувача, передавати функції зворотного виклику дочірнім компонентам і будувати похідні значення без дублювання стану.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Що реалізовано
 
-## Expanding the Oxlint configuration
+- Один керований компонент `TrafficLights` замість двох незалежних копій.
+- Клік на red, yellow або green робить сигнал активним; активна лампа візуально виділена, неактивні приглушені.
+- Кожен клік збільшує лічильник саме того кольору, на який натиснули.
+- Компонент `StatsBar` показує статистику для трьох кольорів, загальну кількість кліків і поточний сигнал.
+- Перемикач орієнтації vertical / horizontal, який не скидає ні активний сигнал, ні статистику.
+- `totalClicks` і текст орієнтації обчислюються як похідні значення без окремого `useState`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Структура компонентів
+
+```
+App
+└── TrafficLights   (стан: currentSignal, clicks, orientation)
+    ├── Light × 3
+    └── StatsBar
+```
+
+| Компонент | Відповідальність |
+|-----------|------------------|
+| `TrafficLights` | Єдиний власник стану, обробники подій, обчислення `totalClicks` |
+| `Light` | Показує одну лампу, викликає `onSelect(color)` при кліку |
+| `StatsBar` | Показує статистику, кнопка перемикання орієнтації через callback |
+
+## Ключові рішення
+
+- Стан піднято до `TrafficLights`, бо один клік одночасно змінює активний сигнал, лічильник і дані для `StatsBar`.
+- `Light` отримує `onSelect(color)`, а не функцію оновлення стану, тому не знає про внутрішню реалізацію батьківського компонента.
+- Лічильники оновлюються функцією від попереднього значення без мутації об'єкта.
+
+## Запуск
+
+```bash
+npm install
+npm run dev
+```
+
+Відкрийте адресу з терміналу (зазвичай `http://localhost:5173`).
+
+## Перевірка
+
+Послідовність кліків red → green → green → yellow має дати лічильники Red 1, Yellow 1, Green 2, всього 4, активний сигнал yellow. Після перемикання орієнтації значення не змінюються.
+
+## Висновок
+
+Під час роботи було засвоєно використання `useState`, передачу callback-функцій через props, підняття стану до спільного власника та обчислення похідних значень без дублювання стану.
