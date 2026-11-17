@@ -18,12 +18,14 @@
 |-------|------|--------|
 | `laba1` | Git, GitHub, базовий React-проєкт на Vite, компоненти `Light` і `TrafficLights` | виконано |
 | `laba2` | Стан, події та похідний інтерфейс: інтерактивний світлофор | виконано |
+| `laba3` | Поведінка в часі, ефекти та анімація: автоматичний світлофор | виконано |
 
 ## Технології
 
-- React
+- React (хуки `useState`, `useEffect`)
 - Vite
 - JavaScript (JSX)
+- CSS transitions
 - Git / GitHub
 
 ## Як запустити проєкт
@@ -31,7 +33,7 @@
 ```bash
 git clone <посилання-на-репозиторій>
 cd frontend-labs
-git checkout laba2
+git checkout laba3
 cd laba1
 npm install
 npm run dev
